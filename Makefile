@@ -2,7 +2,8 @@ deploy_repo_url = git@github.com:jderuere/jderuere.github.io.git
 
 docker-build:
 	docker build -t jderuere/pelican .
-
+	mkdir website/content
+	mkdir website/output
 docker-kill:
 	docker stop pelican
 	docker rm pelican
