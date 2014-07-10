@@ -46,6 +46,7 @@ You can now start writing posts into `website/content` (i.e article.md) :
    Authors: jderuere
    Summary: Short version for index and feeds
 ---
+```
 
 Pelican will automatically build the html into `website/output`.
 
