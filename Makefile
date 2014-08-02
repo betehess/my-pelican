@@ -1,22 +1,23 @@
-deploy_repo_url = git@github.com:jderuere/jderuere.github.io.git
+deploy_repo_url = @@@
 
 docker-build:
-	docker build -t jderuere/pelican .
+	docker build -t betehess/pelican .
 	mkdir website/content
 	mkdir website/output
+
 docker-kill:
 	docker stop pelican
 	docker rm pelican
 
 docker-run:
-	docker run --name="pelican" -d -v $(CURDIR)/website:/srv/pelican-website -p 8000:8000 jderuere/pelican
+	docker run --name="pelican" -d -v $(CURDIR)/website:/srv/pelican-website -p 8000:8000 betehess/pelican
 
 docker-bash:
-	docker run --name="pelican" -i -t -v $(CURDIR)/website:/srv/pelican-website -p 8000:8000 jderuere/pelican /bin/bash
- 
-pelican-github-user-page: 
-	docker run -d -v $(CURDIR)/website:/srv/pelican-website jderuere/pelican ghp-import output
-	git push $(deploy_repo_url) gh-pages:master
+	docker run --name="pelican" -i -t -v $(CURDIR)/website:/srv/pelican-website -p 8000:8000 betehess/pelican /bin/bash
+
+#pelican-github-user-page: 
+#	docker run -d -v $(CURDIR)/website:/srv/pelican-website betehess/pelican ghp-import output
+#	git push $(deploy_repo_url) gh-pages:master
 
 pelican-github-project-page:
-	docker run -i -t -v $(CURDIR)/website:/srv/pelican-website jderuere/pelican make github
+	docker run -i -t -v $(CURDIR)/website:/srv/pelican-website betehess/pelican make github

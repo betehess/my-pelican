@@ -1,13 +1,14 @@
 FROM ubuntu:14.04
-MAINTAINER jderuere <deruere.julien@gmail.com>
+MAINTAINER betehess <bertails@gmail.com>
 
 # Update OS
 RUN sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list
+RUN sed -i 's/archive.ubuntu.com/mirrors.mit.edu/g' /etc/apt/sources.list
 RUN apt-get update
 RUN apt-get -y upgrade
 
 # Install dependencies
-RUN apt-get install make python-setuptools -y
+RUN apt-get install make python-setuptools python-dev -y
 RUN easy_install pip
 RUN pip install pelican Markdown ghp-import shovel
 RUN pip install --upgrade pelican Markdown ghp-import shovel
