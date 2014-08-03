@@ -16,7 +16,7 @@ docker-bash:
 	docker run --name="pelican" -i -t -v $(CURDIR)/website:/srv/pelican-website -p 8000:8000 betehess/pelican /bin/bash
 
 docker-work:
-	docker run --rm -i -t -v $(CURDIR)/website:/srv/pelican-website -p 8000:8000 betehess/pelican /bin/bash
+	docker run --rm -i -t -v $(CURDIR)/website:/srv/pelican-website -u `whoami` -v /etc/passwd:/etc/passwd -v /etc/group:/etc/group -p 8000:8000 betehess/pelican /bin/bash
 
 #pelican-github-user-page: 
 #	docker run -d -v $(CURDIR)/website:/srv/pelican-website betehess/pelican ghp-import output
