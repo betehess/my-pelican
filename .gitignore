@@ -1,0 +1,5 @@
+# pelican's artifact
+cache
+output
+*.pid
+*.pyc
