@@ -3,3 +3,4 @@ cache
 output
 *.pid
 *.pyc
+themes
