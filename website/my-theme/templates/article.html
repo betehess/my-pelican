@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+{{ super() }}
+<article>
+<h1>{{ article.title }}</h2>
+{{ article.content }}
+</article>
+{% endblock %}

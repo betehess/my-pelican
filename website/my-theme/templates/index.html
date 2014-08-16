@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+{{ super() }}
+<article id="home">
+<ul>
+{% for article in articles_page.object_list %}
+<li>
+    <time datetime="{{ article.date.isoformat() }}">{{ article.date|strftime("%Y %b %d") }}</time><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
+</li>
+{% endfor %}
+</ul>
+</article>
+{% endblock content%}
+

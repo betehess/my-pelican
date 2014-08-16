@@ -1,0 +1,161 @@
+@import url(https://www.google.com/fonts#UsePlace:use/Collection:Ubuntu+Mono:400,400italic,700,700italic);
+html { font-family: 'Ubuntu Mono', sans-serif; }
+h1 { text-transform: uppercase }
+h1, h2 { font-weight: normal; }
+
+body {margin: 0}
+* { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+body > article {
+  line-height: 1.6em;
+  display: block;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px 10px 0;
+}
+
+body > article pre,
+body > article video,
+body > article img {
+  max-width: 100%;
+}
+
+body > article pre {
+  overflow-x: auto;
+  background-color: #F4F4F4;
+  padding: 10px; 
+}
+
+hr {
+  border-width: 0 0 1px 0;
+}
+
+footer {
+  text-align: center;
+}
+
+footer:before {
+  display: block;
+  content: "#";
+  margin: 20px;
+}
+
+#comments {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+#comments:not(.showme) {
+  display: none;
+}
+
+a { color:#63de00; text-decoration:none; }
+a:hover { text-decoration: underline; }
+
+.tldr {
+  color: #666;
+  font-style: italic;
+}
+
+.tldr:before {
+  content: "tldr; ";
+  font-size: 80%;
+  color: black;
+  font-style: normal;
+}
+
+.tldr > strong {
+  font-style: normal;
+  color: black;
+}
+
+/* Sidebar */
+
+aside {
+  width: 300px; height: 100%;
+  position: fixed;
+  top: 0; left: 0;
+  padding: 50px;
+  background-color: #171717;
+  color: white;
+}
+
+aside > p { margin: 0; }
+aside > hr {
+  margin: 0; clear: both;
+  border: 0; height: 0;
+}
+
+#avatar {
+  width: 80px;
+  border-radius: 50%;
+  display: block;
+  margin: 0 10px 40px 0;
+  box-shadow: 0 0 0 2px white;
+  -webkit-transition: 200ms;
+     -moz-transition: 200ms;
+      -ms-transition: 200ms;
+       -o-transition: 200ms;
+          transition: 200ms;
+}
+
+#avatar:hover {
+  box-shadow: 0 0 0 4px #63de00;
+}
+
+#home li {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  margin-bottom: 10px;
+  list-style: none;
+}
+
+#home li time {
+  margin-right: 20px;
+  margin-left: -10px;
+  display: inline-block;
+  width: 120px;
+  text-align: right;
+  color: #aaa;
+}
+
+@media (max-width: 1220px) {
+  body > article {
+    margin: 40px 0 0 320px;
+  }
+  #comments {
+    margin: 0 0 0 300px;
+  }
+}
+
+@media (max-width: 950px) {
+  #home li time {
+    display: none;
+  }
+}
+
+@media (max-width: 800px) {
+  aside {
+    width: 100%;
+    height: auto;
+    padding: 14px;
+    position: static;
+    font-size: 80%;
+    text-align: center;
+  }
+  body > article {
+    margin: 0 auto;
+    padding-top: 5px;
+  }
+  #comments {
+    margin: 0 auto;
+  }
+  #avatar {
+    height: 50px;
+    width: 50px;
+    margin: 10px auto;
+  }
+}
