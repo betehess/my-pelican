@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = u'betehess'
-SITENAME = u"Alexandre Bertails"
-#SITEURL = 'http://bertails.org'
+AUTHOR = u'Alexandre Bertails'
+SITENAME = u"You have a link"
+SITEURL = u'http://bertails.org'
+RELATIVE_URLS = True
 
 PATH = 'content'
 
@@ -26,9 +27,6 @@ FEED_ATOM = None
 FEED_RSS = None
 
 DEFAULT_PAGINATION = 10
-
-# Uncomment following line if you want document-relative URLs when developing
-#RELATIVE_URLS = True
 
 MD_EXTENSIONS = ['codehilite(css_class=codehilite code)','extra','headerid']
 
