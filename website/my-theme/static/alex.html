@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Alexandre Bertails' home page</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+  <style type="text/css">
+@import url(http://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic,700italic);
+body {
+  font-family: 'Ubuntu Mono', sans-serif;
+  background-color: black;
+  color: rgb(160, 160, 160);
+}
+samp.cursor {
+  text-decoration: blink ! important;
+}
+div.content {
+  width: 95%;
+  margin-left: 5%;
+  margin-top: 3em;
+}
+a {
+  color: white ! important;
+  text-decoration: none ! important;
+}
+a:hover {
+  color: red ! important;
+}
+  </style>
+</head>
+
+
+<body>
+
+<div style="font-family: monospace;" class="content">
+betehess@simplet% finger betehess<br>
+Login name: betehess In real life: <a href="http://twitter.com/bertails">Alexandre Bertails</a><br>
+Mail: <a href="mailto:alexandre@bertails.org">alexandre (at) bertails (dot) org</a><br>
+Directory: /home/betehess<br>
+<br>
+Scala &amp; Linked Data Dev @ Pellucid. Blog at <a href="http://bertails.org">http://bertails.org</a>.<br>
+<br>
+betehess@simplet% firefox <a href="/resume/">resume</a>
+&amp;<br>
+[1] 2719<br>
+<br>
+betehess@simplet% ls -l ~/activités<br>
+total 10<br>
+drwxr-xr-x 1 betehess <a href="http://www.pellucid.com/">pellucid&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;<span id="bytes">201685</span> 2014-08-17 startup fixing pitchbook creation<br>
+
+drwxr-xr-x 5 betehess <a href="http://www.w3.org">w3c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>1903616 2014-01-31 world wide web consortium<br>
+
+drwxr-xr-x 1 betehess <a href="http://na.atos.net/en-us/about_us/default.htm">atos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>2350080 2009-07-14 société de services<br>
+
+drwxr-xr-x 1 betehess <a href="http://www.entropic-synergies.com">entropic-synergies&nbsp;&nbsp;</a>2572288 2008-04-30 portail de jeux en ligne<br>
+
+drwxr-xr-x 1 betehess <a href="http://www.inria.fr/saclay/">inria-saclay&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>3102720 2007-09-30 laboratoire de recherche en informatique<br>
+
+drwxr-xr-x 3 betehess <a href="http://www.telecom-robotics.org">telecom-robotics&nbsp;&nbsp;&nbsp;&nbsp;</a>4005845 2007-06-30 association de robotique<br>
+
+drwxr-xr-x 1 betehess <a href="http://mpri.master.univ-paris7.fr">mpri&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>3631061 2006-06-30 master recherche<br>
+
+drwxr-xr-x 2 betehess <a href="http://www.telecom-paristech.fr/eng/telecom-paristech.html">telecom-paristech&nbsp;&nbsp;&nbsp;</a>4005845 2006-06-30 grande école<br>
+
+drwxr-xr-x 2 betehess <a href="http://www.ufr-info-p7.jussieu.fr/">jussieu&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>4753365 2004-06-30 université parisienne<br>
+
+drwxr-xr-x 5 betehess <a href="http://www.prytanee.asso.fr/">prytanée&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>6623189 2002-06-30 lycée et prépa militaires<br>
+
+<br>
+betehess@simplet% cat /dev/urandom > /dev/null<samp class="cursor">_</samp>
+
+</div>
+
+<script type="text/javascript">
+  var bytes = function(year, month, day) {
+    var from = Math.floor(new Date(year, month-1, day).getTime() / 1000);
+    var today = Math.floor(Date.now() / 1000);
+    var sec = 3600*24;
+    var diff = today - from;
+    var number = Math.floor(diff / sec * 1024);
+    if (number < 1000000) {
+      number = "&nbsp;" + number;
+    }
+    return number;
+  };
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-6742775-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+
+    document.getElementById("bytes").innerHTML = bytes(2014, 02, 01);
+
+  })();
+</script>
+
+</body>
+</html>
