@@ -28,7 +28,8 @@ FEED_RSS = None
 
 DEFAULT_PAGINATION = 10
 
-MD_EXTENSIONS = ['codehilite(css_class=codehilite code)','extra','headerid']
+#MD_EXTENSIONS = ['codehilite(css_class=codehilite code)','extra','headerid']
+MD_EXTENSIONS = ['extra','headerid']
 
 # bootstrap built-texts BT3-Flat Responsive-Pelican
 THEME = 'my-theme'

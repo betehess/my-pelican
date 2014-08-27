@@ -8,7 +8,7 @@ body {margin: 0}
 body > article {
   line-height: 1.6em;
   display: block;
-  max-width: 600px;
+  max-width: 800px;
   margin: 40px auto;
   padding: 20px 10px 0;
 }
@@ -21,8 +21,8 @@ body > article img {
 
 body > article pre {
   overflow-x: auto;
-  background-color: #F4F4F4;
-  padding: 10px; 
+//  background-color: #F4F4F4;
+//  padding: 10px; 
 }
 
 hr {
