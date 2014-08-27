@@ -86,11 +86,20 @@ aside > hr {
   border: 0; height: 0;
 }
 
+.icons {
+  margin: 30px 0px 0px 0px;
+  text-align: center;
+}
+
+.icons img {
+  width: 40px;
+}
+
 #avatar {
   width: 80px;
   border-radius: 50%;
   display: block;
-  margin: 0 10px 40px 0;
+  margin: 0 10px 30px 0;
   box-shadow: 0 0 0 2px white;
   -webkit-transition: 200ms;
      -moz-transition: 200ms;
@@ -156,5 +165,9 @@ aside > hr {
     height: 50px;
     width: 50px;
     margin: 10px auto;
+  }
+  .icons {
+    margin: 10px auto;
+    text-align: center;
   }
 }

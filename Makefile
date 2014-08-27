@@ -1,5 +1,3 @@
-deploy_repo_url = @@@
-
 docker-build:
 	docker build -t betehess/pelican .
 	mkdir website/content
@@ -17,10 +15,3 @@ docker-bash:
 
 docker-work:
 	docker run --rm -i -t -v $(CURDIR)/website:/srv/pelican-website -u `whoami` -v /etc/passwd:/etc/passwd -v /etc/group:/etc/group -p 8000:8000 betehess/pelican /bin/bash
-
-#pelican-github-user-page: 
-#	docker run -d -v $(CURDIR)/website:/srv/pelican-website betehess/pelican ghp-import output
-#	git push $(deploy_repo_url) gh-pages:master
-
-pelican-github-project-page:
-	docker run -i -t -v $(CURDIR)/website:/srv/pelican-website betehess/pelican make github
