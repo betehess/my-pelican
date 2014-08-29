@@ -49,7 +49,7 @@ footer:before {
   display: none;
 }
 
-a { color:#63de00; text-decoration:none; }
+a { color:#24890D; text-decoration:none; }
 a:hover { text-decoration: underline; }
 
 .tldr {
@@ -109,7 +109,7 @@ aside > hr {
 }
 
 #avatar:hover {
-  box-shadow: 0 0 0 4px #63de00;
+  box-shadow: 0 0 0 4px #24890D;
 }
 
 #home li {
