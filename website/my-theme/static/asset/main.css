@@ -1,3 +1,33 @@
+.isso-comment {
+  max-width: 68em;
+  padding-top: 0.95em;
+  margin: 0.95em auto;
+}
+
+.isso-comment:not(:first-of-type) {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.isso-comment .author {
+  font-weight: bold;
+  color: #555;
+}
+
+.isso-comment .isso-comment-header {
+  font-size: 0.85em;
+}
+
+.isso-comment .spacer, .isso-comment a.permalink, .isso-comment .note, .isso-comment a.parent {
+  color: gray;
+}
+
+.isso-comment .spacer {
+  padding: 0 6px;
+}
+
+
+
+
 html { font-family: 'Ubuntu Mono', sans-serif; }
 h1 { text-transform: uppercase }
 h1, h2 { font-weight: normal; }

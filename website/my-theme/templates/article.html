@@ -5,6 +5,51 @@
 <article>
 <h1>{{ article.title }}</h1>
 {{ article.content }}
+
+<section id="isso-comments">
+  <h4>6 Comments</h4>
+  <div class="isso-postbox">
+    <div class="form-wrapper">
+      <div class="textarea-wrapper">
+        <div contenteditable="true" class="textarea placeholder">Type Comment Here (at least 3 chars)</div>
+      </div>
+      <section class="auth-section">
+        <p class="input-wrapper">
+          <input type="text" name="author" placeholder="Name (optional)" value="Alex">
+        </p>
+        <p class="input-wrapper">
+          <input type="email" name="email" placeholder="E-mail (optional)" value="foo@bar.com">
+        </p>
+        <p class="input-wrapper">
+          <input type="text" name="website" placeholder="Website (optional)" value="http://example.com">
+        </p>
+        <p class="post-action">
+          <input type="submit" value="Submit">
+        </p>
+      </section>
+    </div>
+
+    <div id="isso-root">
+
+      <div id="isso-3" class="isso-comment">
+        <div class="text-wrapper">
+          <div role="meta" class="isso-comment-header"><span class="author">Anonymous</span><span class="spacer">•</span><a href="#isso-3" class="permalink"><time title="Sat Sep 06 2014 18:01:01 GMT-0400 (EDT)" datetime="2014-08-06T22:01:01Z">Yesterday</time></a></div>
+          <div class="text"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium at commodi cum deserunt dolore, error fugiat harum incidunt, ipsa ipsum mollitia nam provident rerum sapiente suscipit tempora vitae? Est, qui?</p></div>
+        </div>
+      </div>
+
+      <div id="isso-4" class="isso-comment">
+        <div class="text-wrapper">
+          <div role="meta" class="isso-comment-header"><span class="author">Anonymous</span><span class="spacer">•</span><a href="#isso-3" class="permalink"><time title="Sat Sep 06 2014 18:01:01 GMT-0400 (EDT)" datetime="2014-08-06T22:01:01Z">Yesterday</time></a></div>
+          <div class="text"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium at commodi cum deserunt dolore, error fugiat harum incidunt, ipsa ipsum mollitia nam provident rerum sapiente suscipit tempora vitae? Est, qui?</p></div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
 </article>
 <!-- see https://highlightjs.org/usage/ and http://jmblog.github.io/color-themes-for-highlightjs/ -->
 <link rel="stylesheet" href="{{ SITE_URL }}/asset/tomorrow-night-bright.css">
