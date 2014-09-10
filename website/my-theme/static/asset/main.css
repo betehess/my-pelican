@@ -1,27 +1,100 @@
-.isso-comment {
+#comments > h4 {
+  color: #555;
+  font-weight: bold;
+}
+
+.spratic-postbox {
+  max-width: 68em;
+  margin: 0 auto 2em;
+}
+
+.spratic-postbox > .form-wrapper {
+  display: block;
+  padding: 0;
+}
+
+#comments .textarea.placeholder {
+  color: #AAA;
+}
+
+#comments .textarea {
+  min-height: 58px;
+  outline: 0;
+}
+
+.spratic-postbox > .form-wrapper .textarea {
+  margin: 0 0 .3em;
+  padding: .4em .8em;
+  border-radius: 3px;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.spratic-postbox .auth-section, .spratic-postbox .post-action {
+  display: block;
+}
+
+.spratic-postbox .input-wrapper {
+  display: inline-block;
+  position: relative;
+  max-width: 25%;
+  margin: 0;
+}
+
+.spratic-postbox .input-wrapper input {
+  padding: .3em 10px;
+  max-width: 100%;
+  border-radius: 3px;
+  background-color: #fff;
+  line-height: 1.4em;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.spratic-postbox .post-action {
+  display: inline-block;
+  float: right;
+  margin: 0;
+}
+
+.spratic-postbox .post-action > input {
+  padding: calc(.3em - 1px);
+  border-radius: 2px;
+  border: 1px solid #CCC;
+  background-color: #DDD;
+  cursor: pointer;
+  outline: 0;
+  line-height: 1.4em;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.spratic-comment {
   max-width: 68em;
   padding-top: 0.95em;
   margin: 0.95em auto;
 }
 
-.isso-comment:not(:first-of-type) {
+.spratic-comment:not(:first-of-type) {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.isso-comment .author {
+.spratic-comment .author {
   font-weight: bold;
   color: #555;
 }
 
-.isso-comment .isso-comment-header {
+.spratic-comment .spratic-comment-header {
   font-size: 0.85em;
 }
 
-.isso-comment .spacer, .isso-comment a.permalink, .isso-comment .note, .isso-comment a.parent {
+.spratic-comment .spacer, .spratic-comment a.permalink, .spratic-comment .note, .spratic-comment a.parent {
   color: gray;
 }
 
-.isso-comment .spacer {
+.spratic-comment .spacer {
   padding: 0 6px;
 }
 
@@ -67,16 +140,6 @@ footer:before {
   display: block;
   content: "#";
   margin: 20px;
-}
-
-#comments {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 0 10px;
-}
-
-#comments:not(.showme) {
-  display: none;
 }
 
 a { color:#24890D; text-decoration:none; }
