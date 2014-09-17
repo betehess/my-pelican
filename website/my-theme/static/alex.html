@@ -33,7 +33,7 @@ a:hover {
 
 <div class="content">
 betehess@simplet% finger betehess<br>
-Login name: betehess In real life: <a href="http://twitter.com/bertails">Alexandre Bertails</a><br>
+Login name: betehess In real life: <a id="me" href="http://twitter.com/bertails">Alexandre Bertails</a><br>
 Mail: <a href="mailto:alexandre@bertails.org">alexandre (at) bertails (dot) org</a><br>
 Directory: /home/betehess<br>
 <br>
@@ -45,7 +45,7 @@ betehess@simplet% firefox <a href="/resume/">resume</a>
 <br>
 betehess@simplet% ls -l ~/activités<br>
 total 10<br>
-drwxr-xr-x 1 betehess <a href="http://www.pellucid.com/">pellucid&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;<span id="bytes">201685</span> 2014-08-17 startup fixing pitchbook creation<br>
+drwxr-xr-x 1 betehess <a href="http://www.pellucid.com/">pellucid&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;<span id="bytes">201685</span> <span id="today">2014-08-17</span> startup fixing pitchbook creation<br>
 
 drwxr-xr-x 5 betehess <a href="http://www.w3.org">w3c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>1903616 2014-01-31 world wide web consortium<br>
 
@@ -71,30 +71,32 @@ betehess@simplet% cat /dev/urandom > /dev/null<samp class="cursor">_</samp>
 </div>
 
 <script type="text/javascript">
-  var bytes = function(year, month, day) {
-    var from = Math.floor(new Date(year, month-1, day).getTime() / 1000);
-    var today = Math.floor(Date.now() / 1000);
-    var sec = 3600*24;
-    var diff = today - from;
-    var number = Math.floor(diff / sec * 1024);
-    if (number < 1000000) {
-      number = "&nbsp;" + number;
-    }
-    return number;
-  };
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-6742775-1']);
-  _gaq.push(['_trackPageview']);
+ Date.prototype.yyyymmdd = function() {
+   var yyyy = this.getFullYear().toString();
+   var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
+   var dd  = this.getDate().toString();
+   return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]); // padding
+ };
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+ var bytes = function(year, month, day) {
+   var from = Math.floor(new Date(year, month-1, day).getTime() / 1000);
+   var today = Math.floor(Date.now() / 1000);
+   var sec = 3600*24;
+   var diff = today - from;
+   var number = Math.floor(diff / sec * 1024);
+   if (number < 1000000) {
+     number = "&nbsp;" + number;
+   }
+   return number;
+ };
+ 
+ (function() {
 
-    document.getElementById("bytes").innerHTML = bytes(2014, 02, 01);
+   document.getElementById("bytes").innerHTML = bytes(2014, 02, 01);
+   document.getElementById("today").innerHTML = new Date().yyyymmdd();
 
-  })();
+ })();
 </script>
 
 </body>

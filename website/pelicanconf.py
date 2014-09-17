@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 AUTHOR = u'Alexandre Bertails'
 SITENAME = u"You have a link"
 SITEURL = u'http://bertails.org'
-RELATIVE_URLS = True
+#RELATIVE_URLS = True
 
 PATH = 'content'
 
@@ -15,10 +15,10 @@ DEFAULT_LANG = u'en'
 DELETE_OUTPUT_DIRECTORY = True
 
 #feeds
-FEED_ALL_ATOM = 'feeds/all.xml'
-FEED_ALL_RSS = 'feeds/all.rss'
-CATEGORY_FEED_ATOM = 'feeds/%s.xml'
-CATEGORY_FEED_RSS = 'feeds/%s.rss'
+FEED_ALL_ATOM = 'feed/all.xml'
+FEED_ALL_RSS = 'feed/all.rss'
+CATEGORY_FEED_ATOM = 'feed/%s.xml'
+CATEGORY_FEED_RSS = 'feed/%s.rss'
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 TRANSLATION_FEED_ATOM = None
@@ -31,19 +31,18 @@ DEFAULT_PAGINATION = 10
 #MD_EXTENSIONS = ['codehilite(css_class=codehilite code)','extra','headerid']
 MD_EXTENSIONS = ['extra','headerid']
 
-# bootstrap built-texts BT3-Flat Responsive-Pelican
 THEME = 'my-theme'
 THEME_STATIC_DIR = ''
 
-ARTICLE_URL = '{slug}'
-ARTICLE_SAVE_AS = '{slug}.html'
-ARTICLE_LANG_URL = '{slug}-{lang}'
-ARTICLE_LANG_SAVE_AS = '{slug}-{lang}.html'
+ARTICLE_URL = '{date:%Y}/{date:%m}/{date:%d}/{slug}'
+ARTICLE_SAVE_AS = '{date:%Y}/{date:%m}/{date:%d}/{slug}.html'
+ARTICLE_LANG_URL = '{date:%Y}/{date:%m}/{date:%d}/{slug}-{lang}'
+ARTICLE_LANG_SAVE_AS = '{date:%Y}/{date:%m}/{date:%d}/{slug}-{lang}.html'
 
-DRAFT_URL = 'drafts/{slug}.html'
-DRAFT_SAVE_AS = 'drafts/{slug}.html'
-DRAFT_LANG_URL = 'drafts/{slug}-{lang}.html'
-DRAFT_LANG_SAVE_AS = 'drafts/{slug}-{lang}.html'
+DRAFT_URL = 'draft/{slug}.html'
+DRAFT_SAVE_AS = 'draft/{slug}.html'
+DRAFT_LANG_URL = 'draft/{slug}-{lang}.html'
+DRAFT_LANG_SAVE_AS = 'draft/{slug}-{lang}.html'
 
 CATEGORY_URL = ''
 CATEGORY_SAVE_AS = ''
