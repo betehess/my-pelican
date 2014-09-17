@@ -5,7 +5,7 @@
 <ul>
 {% for article in articles_page.object_list %}
 <li>
-    <time datetime="{{ article.date.isoformat() }}">{{ article.date|strftime("%Y %b %d") }}</time><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
+    <time datetime="{{ article.date.isoformat() }}">{{ article.date|strftime("%Y %b %d") }}</time><a href="/{{ article.url }}">{{ article.title }}</a>
 </li>
 {% endfor %}
 </ul>
