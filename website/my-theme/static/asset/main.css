@@ -36,6 +36,10 @@ hr {
 a { color:#24890D; text-decoration:none; }
 a:hover { text-decoration: underline; }
 
+code {
+  background-color: rgba(0,0,0,0.04);
+}
+
 /* Sidebar */
 
 aside {
