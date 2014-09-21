@@ -46,12 +46,9 @@ _:b2 a schema:Event ;
   schema:url <http://conferences.ted.com/TED2009/> .
 ```
 
-Even if you are not well-versed in [RDF](http://www.w3.org/TR/rdf11-primer/) and [Turtle](http://www.w3.org/TR/ldp/), I bet you can still understand that this piece of data is about a person named Tim Berners-Lee, identified by the URI `<http://www.w3.org/People/Berners-Lee/card#i>`. Also, TimBL seems to have been a participant in two events, each of them having some data attached to them. Also, do you see how those `_:b1` and `_:b2` identifiers give you more flexibility than plain JSON? They are **identifiers local to this graph** and are called [blank nodes](http://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-blank-nodes). 
+Even if you are not well-versed in [RDF](http://www.w3.org/TR/rdf11-primer/) and [Turtle](http://www.w3.org/TR/ldp/), I bet you can still understand that this piece of data is about a person named Tim Berners-Lee, identified by the URI `<http://www.w3.org/People/Berners-Lee/card#i>`. Also, TimBL seems to have been a participant in two events, each of them having some data attached to them. Also, do you see how those `_:b1` and `_:b2` identifiers give you more flexibility than plain JSON? They are **identifiers local to this graph** and are called [blank nodes](http://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/#section-blank-nodes).
 
-@@ schema:workLocation [ schema:name "W3C/MIT" ] ; <- inline blank node vs named bnodes _:b1, _:b2? (consistency)
-
-
-Click on the following graph for a full size visual representation of the data:
+Other blank nodes get handled by the Turtle syntax, as you can see if you click on the following graph for a full-size visual representation of the data:
 
 [![TimBL's card](/2014/09/timbl-card.png)](/2014/09/timbl-card.png)
 
@@ -77,7 +74,7 @@ $ cat query.rdfp | PATCH -S -c 'Content-Type: application/rdf-patch' http://www.
 
 Well, this actually does not work.
 
-Remember when I said that the blank node `_:b2` was a **local identifier** for the graph? This means that TimBL **cannot speak directly** about the TED event (i.e. create a URI which points to it) from outside the document. That would require for the server and the client to agree on a stable identifier for that blank node. That process is called [skolemization](http://www.w3.org/wiki/BnodeSkolemization). It brings a lot of burden on the server to manage those stable identifiers. Also, while the use of blank nodes is mostly transparent in Turtle and [JSON-LD](http://www.w3.org/TR/json-ld/) as they are hidden in the syntax, skolemization would break the syntax.
+Remember when I said that the blank node `_:b2` was a **local identifier** for the graph? This means that TimBL **cannot refer directly** to the TED event from outside the document. That would require for the server and the client to agree on a stable identifier for that blank node. That process is called [skolemization](http://www.w3.org/wiki/BnodeSkolemization). It brings a lot of burden on the server to manage those stable identifiers. Also, while the use of blank nodes is mostly transparent in Turtle and [JSON-LD](http://www.w3.org/TR/json-ld/) as they are hidden in the syntax, skolemization would break the syntax.
 
 [TurtlePatch](http://www.w3.org/2001/sw/wiki/TurtlePatch) has similar expressive power compared to RDF Patch, but it is defined as a subset of SPARQL Update. It also defines [skolemization as being part of the protocol](http://www.w3.org/2001/sw/wiki/TurtlePatch#Handling_Blank_Nodes), where the client can ask for a skolemized version of the graph, which would then be required before PATCHing.
 
@@ -122,7 +119,7 @@ The runtime complexity for matching nodes in a graph is known to be extremely ba
 
 Also, it would be nice to change the evaluation semantics of the Basic Graph Pattern such that the evaluation order of the clauses is **exactly** the one from the query. It makes a lot of sense to let the client have some control over the evaluation order in the context of a PATCH.
 
-<span id="confusing-semantics">SPARQL Update can also be confusing</span> in that **if a graph pattern doesn't match anything, the query still succeeds with no effect on the graph**. I have seen many engineers get puzzled by this (perfectly well defined) behaviour, because they were expecting the query to fail -- i.e. this happens everytime a predicate gets typoed. I am jumping a bit ahead but that is one reason why **LD Patch cannot be compiled down to SPARQL Update while preserving the semantics**.
+<span id="confusing-semantics">SPARQL Update can also be confusing</span> in that **if a graph pattern doesn't match anything, the query still succeeds with no effect on the graph**. I have seen many engineers get puzzled by this (perfectly well defined) behaviour, because they were expecting the query to fail: this would happen every time a predicate gets typoed. I am jumping a bit ahead but that is one reason why **LD Patch cannot be compiled down to SPARQL Update while preserving the semantics**.
 
 Finally, SparqlPatch has no support for `rdf:list`s. On one hand, SPARQL is heavily triple-focused and has never played very well with `rdf:list`. List matching improved in SPARQL 1.1 with [Property Paths](http://www.w3.org/TR/sparql11-query/#propertypaths) but their support is not native, in that **common operations such as slice manipulation, update, or even a simple append, need to be encoded in the query**.
 
@@ -135,7 +132,7 @@ LD Patch {id="ld-patch"}
 
 LD Patch was originally proposed by [Pierre-Antoine Champin](http://liris.cnrs.fr/~pchampin/en/). The format described in the [First Public Working Draft](http://www.w3.org/TR/2014/WD-ldpatch-20140918/) is very close to his original proposal. I became an editor for the specification to make some syntactical enhancements and to make sure that we could provide a [clean formal semantics](https://github.com/w3c/banana-rdf/blob/2fb79a94c9cb52201daab4bc8608ea819706b5c1/ldpatch/src/main/scala/Semantics.scala#L13) for it.
 
-Pierre-Antoine maintains a Python implementation. On my side, I have a Scala implementation working with [Jena](https://jena.apache.org/), [Sesame](http://www.openrdf.org/), and plain Scala. [Andrei Sambra](https://deiu.rww.io/profile/card#me), the third editor, is working on Go and Javascript implementations.
+Pierre-Antoine maintains a Python implementation. On my side, I have a Scala implementation working with [Jena](https://jena.apache.org/), [Sesame](http://www.openrdf.org/), and plain Scala. [Andrei Sambra](https://deiu.rww.io/profile/card#me), the third editor, is working on [Go](http://golang.org/) and Javascript implementations.
 
 A potential drawback for LD Patch is that some RDF graphs cannot be patched. They are deemed [pathological](http://www.w3.org/TR/ldpatch/#pathological-graph) and are [very rare in practice](http://www.websemanticsjournal.org/index.php/ps/article/view/365): Linked Data applications should never be concerned. This may not be true for some SPARQL applications, but this is not our use-case here.
 
@@ -162,7 +159,7 @@ Unlike SparqlPatch, the `Bind` statement does not operate on triples. Instead, a
 
 The runtime semantics for LD Path expressions only rely on a node set. The final set must have a unique value to successfuly be bound to the variable, **otherwise it results in an error**. A path expression is processed from left to right, and can have nested paths for filtering nodes.
 
-Given that semantics, you can imagine that it is 1. easy to reason about, 2. [easy to implement](https://github.com/w3c/banana-rdf/blob/2fb79a94c9cb52201daab4bc8608ea819706b5c1/ldpatch/src/main/scala/Semantics.scala#L158-L192), and 3. very efficient. I would even argue that you cannot remove functionalities from the path expressions without throwing away a whole class of interesting RDF graphs that our proposal is currently able to patch.
+Given that semantics, you can imagine that it is 1. easy to reason about, 2. [easy to implement](https://github.com/w3c/banana-rdf/blob/2fb79a94c9cb52201daab4bc8608ea819706b5c1/ldpatch/src/main/scala/Semantics.scala#L158-L192), and 3. very efficient. I would even argue that you cannot remove functionalities from the path expressions without throwing away a whole class of interesting RDF graphs that LD Patch is able to patch.
 
 Writing a parser for LD Patch proved to be of similar difficulty than for SparqlPatch, as they share most of their respective grammars with Turtle. Most of the code for the engine itself actually lies in the support for `rdf:list`, which basically encodes what users would have to do in their queries if they didn't have native support for list manipulations. So this ends up being done in one place, once and for all, and that is indeed a very good thing.
 
@@ -196,7 +193,7 @@ I would like to emphasize that **relying on an existing syntax (such as SPARQL) 
 Frequently Asked Questions {id="faq"}
 --------------------------
 
-<span id="dbooth-questions">Thanks to [David Booth](http://dbooth.org/)</span> for [providing me with well formulated questions](http://lists.w3.org/Archives/Public/public-ldp/2014Sep/0014.html). Here are some answers to his questions. They only complete the arguments in the other sections of this post.
+<span id="dbooth-questions">Thanks to [David Booth](http://dbooth.org/)</span> for [providing me with well formulated questions and concerns](http://lists.w3.org/Archives/Public/public-ldp/2014Sep/0014.html). Here are some answers. They only complete the arguments in the other sections of this post.
 
 *Are there any concerns about inventing a new syntax?* What if SPARQL, or a profile of it, could **not** address [all the requirements](#requirements)? What if a subset of the syntax was no longer aligned with the superset semantics?
 
@@ -218,4 +215,4 @@ In the meantime, the editors are working on completing the semantics section of 
 
 And finally, after the specification gets completed, we will focus on providing a test suite. The plan is to make it part of the [LDP one](https://github.com/w3c/ldp-testsuite).
 
-That's all folks.   (and thanks Andrei for reviewing drafts of this blog)
+That's all folks.   (and thanks Andrei for reviewing drafts for this post)
