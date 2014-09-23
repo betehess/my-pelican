@@ -153,7 +153,7 @@ $ cat query.ld-patch | PATCH -S -c 'Content-Type: text/ldpatch' http://www.w3.or
 204 No Content
 ```
 
-Unlike SparqlPatch, the `Bind` statement does not operate on triples. Instead, an [LD Path expression](http://www.w3.org/TR/ldpatch/#path-expression) (`/ ^schema:url!`) is evaluated against a concrete starting node (`<http://conferences.ted.com/TED2009/>`). The result node gets bound to a variable (`?ted`) which can then be used in the following statements. That is the main difference when compared to SparqlPatch semantics.
+Unlike SparqlPatch, the `Bind` statement does not operate on triples. Instead, an [LD Path expression](http://www.w3.org/TR/ldpatch/#path-expression) (`/ ^schema:url`) is evaluated against a concrete starting node (`<http://conferences.ted.com/TED2009/>`). The result node gets bound to a variable (`?ted`) which can then be used in the following statements. That is the main difference when compared to SparqlPatch semantics.
 
 <span id="similarities">Note</span>: LD Path expressions are very similar to the [JSON Pointers](http://tools.ietf.org/html/rfc6901) used in [JSON Patch](http://tools.ietf.org/html/rfc6902), and to the [XPath selectors](http://tools.ietf.org/html/rfc5261#ref-W3C.REC-xpath-19991116) used in [XML Patch](http://tools.ietf.org/html/rfc5261).
 
