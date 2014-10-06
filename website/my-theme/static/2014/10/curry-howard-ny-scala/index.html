@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(http://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Coding with Curry-Howard
+
+Alexandre Bertails
+
+ [http://bertails.org](http://bertails.org/) **|** [@bertails](https://twitter.com/bertails)
+
+![Pellucid Analytics logo](pellucid.png)
+
+Pellucid Analytics [http://www.pellucid.com/](http://www.pellucid.com/)
+
+---
+
+```scala 
+scala> def div2(x: Int): Int = x match {
+     |   case 0 => 0
+     |   case 1 => 0
+     |   case _ => 1 + div2(x - 2)
+     | }
+div2: (x: Int)Int
+
+scala> List.iterate(0, 10)(_ + 1).map(div2)
+res0: List[Int] = List(0, 0, 1, 1, 2, 2, 3, 3, 4, 4)
+```
+
+
+
+---
+
+
+
+
+```scala
+scala> :paste
+// Entering paste mode (ctrl-D to finish)
+
+sealed trait Nat
+case object O extends Nat
+case class S(n: Nat) extends Nat
+
+implicit def toNat(i: Int): Nat = i match {
+  case 0 => O
+  case _ => S(toNat(i - 1))
+}
+
+// Exiting paste mode, now interpreting.
+```
+
+
+---
+
+
+
+
+```scala
+scala> implicit class NatW(val n: Nat) extends AnyVal {
+     | 
+     |   def toInt: Int = n match {
+     |     case O    => 0
+     |     case S(n) => 1 + n.toInt
+     |   }
+     | 
+     |   def + (m: Nat): Nat = n match {
+     |     case O     => m
+     |     case S(n0) => S(n0 + m)
+     |   }
+     | 
+     |   def * (m: Nat): Nat = n match {
+     |     case O     => O
+     |     case S(n0) => m + n0 * m
+     |   }
+     | 
+     | }
+defined class NatW
+
+scala> (toNat(2) + 3)
+res1: Nat = S(S(S(S(S(O)))))
+
+scala> (toNat(2) + 3).toInt
+res2: Int = 5
+
+scala> (toNat(2) * 3)
+res3: Nat = S(S(S(S(S(S(O))))))
+
+scala> (toNat(2) * 3).toInt
+res4: Int = 6
+
+```
+
+
+---
+
+
+
+```scala
+scala> def div2(x: Nat): Nat = x match {
+     |   case O        => O
+     |   case S(O)     => O
+     |   case S(S(x0)) =>
+     |     val y = div2(x0)
+     |     y + 1
+     | }
+div2: (x: Nat)Nat
+
+scala> List.iterate(0, 10)(_ + 1).map(x => div2(x).toInt)
+res5: List[Int] = List(0, 0, 1, 1, 2, 2, 3, 3, 4, 4)
+```
+
+
+
+
+---
+
+
+
+```scala
+scala> def div2(x: Nat): Nat = {
+     |   val y = x match {
+     |     case O        => O
+     |     case S(O)     => O
+     |     case S(S(x0)) =>
+     |       val y = div2(x0)
+     |       y + 1
+     |   }
+     |   assert(x == y * 2 || x == y * 2 + 1)
+     |   y
+     | }
+div2: (x: Nat)Nat
+
+scala> 
+
+scala> List.iterate(0, 10)(_ + 1).map(x => div2(x).toInt)
+res6: List[Int] = List(0, 0, 1, 1, 2, 2, 3, 3, 4, 4)
+```
+
+
+
+---
+
+
+
+```scala
+scala> case class Div2(x: Nat, y: Nat) {
+     |   assert(x == y * 2 || x == y * 2 + 1)
+     | }
+defined class Div2
+
+scala> def div2(x: Nat): Div2 = x match {
+     |   case O        => Div2(x, O)
+     |   case S(O)     => Div2(x, O)
+     |   case S(S(x0)) => 
+     |     val Div2(`x0`, y) = div2(x0)
+     |     Div2(x, y + 1)
+     | }
+div2: (x: Nat)Div2
+
+scala> List.iterate(0, 10)(_ + 1).map(x => div2(x).y.toInt)
+res7: List[Int] = List(0, 0, 1, 1, 2, 2, 3, 3, 4, 4)
+```
+
+
+
+---
+
+
+```coq
+Coq < Inductive nat : Set :=
+        | O : nat
+        | S : nat -> nat.
+nat is defined
+nat_rect is defined
+nat_ind is defined
+nat_rec is defined
+
+Coq < Fixpoint plus (n m:nat) : nat :=
+        match n with
+        | O => m
+        | S p => S (p + m)
+        end
+      where "n + m" := (plus n m).
+plus is recursively defined (decreasing on 1st argument)
+
+Coq < Fixpoint mult (n m:nat) : nat :=
+        match n with
+        | O => O
+        | S p => m + p * m
+        end
+      where "n * m" := (mult n m).
+mult is recursively defined (decreasing on 1st argument)
+```
+
+
+---
+
+
+```coq
+Coq < Inductive div2 x : Set :=
+Coq <   divex : forall y, x = 2 * y \/ x = 1 + 2 * y -> div2 x.
+div2 is defined
+div2_rect is defined
+div2_ind is defined
+div2_rec is defined
+
+Coq < Lemma eucl_div2 : forall (x : nat), div2 x.
+1 subgoal
+  
+  ============================
+   forall x : nat, div2 x
+
+eucl_div2 < 
+```
+
+
+---
+
+
+```coq
+eucl_div2 < intro x.
+1 subgoal
+  
+  x : nat
+  ============================
+   div2 x
+```
+
+
+---
+
+
+```coq
+eucl_div2 < Require Import Wf_nat.
+
+eucl_div2 < Check gt_wf_rec.
+gt_wf_rec
+     : forall (n : nat) (P : nat -> Set),
+       (forall n0 : nat, (forall m : nat, n0 > m -> P m) -> P n0) -> P n
+```
+
+--
+
+```coq
+eucl_div2 < pattern x.
+1 subgoal
+  
+  x : nat
+  ============================
+   (fun n : nat => div2 n) x
+
+eucl_div2 < apply gt_wf_rec.
+1 subgoal
+  
+  x : nat
+  ============================
+   forall n : nat, (forall m : nat, n > m -> div2 m) -> div2 n
+```
+
+
+---
+
+
+
+```coq
+eucl_div2 < intros n H.
+1 subgoal
+  
+  x : nat
+  n : nat
+  H : forall m : nat, n > m -> div2 m
+  ============================
+   div2 n
+```
+
+
+---
+
+
+
+```coq
+eucl_div2 < induction n.
+2 subgoals
+  
+  x : nat
+  H : forall m : nat, 0 > m -> div2 m
+  ============================
+   div2 0
+
+subgoal 2 is:
+ div2 (S n)
+```
+
+
+---
+
+
+
+```coq
+eucl_div2 < apply divex with 0.
+2 subgoals
+  
+  x : nat
+  H : forall m : nat, 0 > m -> div2 m
+  ============================
+   0 = 2 * 0 \/ 0 = 1 + 2 * 0
+
+subgoal 2 is:
+ div2 (S n)
+```
+
+
+---
+
+
+
+```coq
+eucl_div2 < left.
+2 subgoals
+  
+  x : nat
+  H : forall m : nat, 0 > m -> div2 m
+  ============================
+   0 = 2 * 0
+
+subgoal 2 is:
+ div2 (S n)
+```
+
+```coq
+eucl_div2 < rewrite <- mult_n_O.
+2 subgoals
+  
+  x : nat
+  H : forall m : nat, 0 > m -> div2 m
+  ============================
+   0 = 0
+
+subgoal 2 is:
+ div2 (S n)
+```
+
+```coq
+eucl_div2 < reflexivity.
+1 subgoal
+  
+  x : nat
+  n : nat
+  H : forall m : nat, S n > m -> div2 m
+  IHn : (forall m : nat, n > m -> div2 m) -> div2 n
+  ============================
+   div2 (S n)
+```
+
+
+---
+
+
+```coq
+eucl_div2 < induction n.
+2 subgoals
+  
+  x : nat
+  H : forall m : nat, 1 > m -> div2 m
+  IHn : (forall m : nat, 0 > m -> div2 m) -> div2 0
+  ============================
+   div2 1
+
+subgoal 2 is:
+ div2 (S (S n))
+```
+
+
+---
+
+
+
+```coq
+eucl_div2 < apply divex with 0.
+2 subgoals
+  
+  x : nat
+  H : forall m : nat, 1 > m -> div2 m
+  IHn : (forall m : nat, 0 > m -> div2 m) -> div2 0
+  ============================
+   1 = 2 * 0 \/ 1 = 1 + 2 * 0
+
+subgoal 2 is:
+ div2 (S (S n))
+```
+
+```coq
+eucl_div2 < right; rewrite <- plus_n_O; reflexivity.
+1 subgoal
+  
+  x : nat
+  n : nat
+  H : forall m : nat, S (S n) > m -> div2 m
+  IHn : (forall m : nat, S n > m -> div2 m) -> div2 (S n)
+  IHn0 : (forall m : nat, S n > m -> div2 m) ->
+         ((forall m : nat, n > m -> div2 m) -> div2 n) -> div2 (S n)
+  ============================
+   div2 (S (S n))
+```
+
+
+---
+
+
+
+```coq
+eucl_div2 < elim H with n.
+2 subgoals
+  
+  x : nat
+  n : nat
+  H : forall m : nat, S (S n) > m -> div2 m
+  IHn : (forall m : nat, S n > m -> div2 m) -> div2 (S n)
+  IHn0 : (forall m : nat, S n > m -> div2 m) ->
+         ((forall m : nat, n > m -> div2 m) -> div2 n) -> div2 (S n)
+  ============================
+   forall y : nat, n = 2 * y \/ n = 1 + 2 * y -> div2 (S (S n))
+
+subgoal 2 is:
+ S (S n) > n
+```
+
+
+---
+
+
+```coq
+eucl_div2 < intros y Hor.
+2 subgoals
+  
+  x : nat
+  n : nat
+  H : forall m : nat, S (S n) > m -> div2 m
+  IHn : (forall m : nat, S n > m -> div2 m) -> div2 (S n)
+  IHn0 : (forall m : nat, S n > m -> div2 m) ->
+         ((forall m : nat, n > m -> div2 m) -> div2 n) -> div2 (S n)
+  y : nat
+  Hor : n = 2 * y \/ n = 1 + 2 * y
+  ============================
+   div2 (S (S n))
+
+subgoal 2 is:
+ S (S n) > n
+```
+
+---
+
+
+```coq
+eucl_div2 < apply divex with (S y).
+2 subgoals
+  
+  x : nat
+  n : nat
+  H : forall m : nat, S (S n) > m -> div2 m
+  IHn : (forall m : nat, S n > m -> div2 m) -> div2 (S n)
+  IHn0 : (forall m : nat, S n > m -> div2 m) ->
+         ((forall m : nat, n > m -> div2 m) -> div2 n) -> div2 (S n)
+  y : nat
+  Hor : n = 2 * y \/ n = 1 + 2 * y
+  ============================
+   S (S n) = 2 * S y \/ S (S n) = 1 + 2 * S y
+
+subgoal 2 is:
+ S (S n) > n
+```
+
+---
+
+
+```coq
+eucl_div2 < destruct Hor.
+3 subgoals
+  
+  x : nat
+  n : nat
+  H : forall m : nat, S (S n) > m -> div2 m
+  IHn : (forall m : nat, S n > m -> div2 m) -> div2 (S n)
+  IHn0 : (forall m : nat, S n > m -> div2 m) ->
+         ((forall m : nat, n > m -> div2 m) -> div2 n) -> div2 (S n)
+  y : nat
+  H0 : n = 2 * y
+  ============================
+   S (S n) = 2 * S y \/ S (S n) = 1 + 2 * S y
+
+subgoal 2 is:
+ S (S n) = 2 * S y \/ S (S n) = 1 + 2 * S y
+subgoal 3 is:
+ S (S n) > n
+```
+
+---
+
+
+```coq
+eucl_div2 < rewrite H0; simpl; auto.
+2 subgoals
+  
+  x : nat
+  n : nat
+  H : forall m : nat, S (S n) > m -> div2 m
+  IHn : (forall m : nat, S n > m -> div2 m) -> div2 (S n)
+  IHn0 : (forall m : nat, S n > m -> div2 m) ->
+         ((forall m : nat, n > m -> div2 m) -> div2 n) -> div2 (S n)
+  y : nat
+  H0 : n = 1 + 2 * y
+  ============================
+   S (S n) = 2 * S y \/ S (S n) = 1 + 2 * S y
+
+subgoal 2 is:
+ S (S n) > n
+```
+
+```coq
+eucl_div2 < rewrite H0; simpl; auto.
+1 subgoal
+  
+  x : nat
+  n : nat
+  H : forall m : nat, S (S n) > m -> div2 m
+  IHn : (forall m : nat, S n > m -> div2 m) -> div2 (S n)
+  IHn0 : (forall m : nat, S n > m -> div2 m) ->
+         ((forall m : nat, n > m -> div2 m) -> div2 n) -> div2 (S n)
+  ============================
+   S (S n) > n
+
+eucl_div2 < auto.
+No more subgoals.
+```
+
+---
+
+
+```coq
+eucl_div2 < Qed.
+intro x.
+pattern x.
+apply gt_wf_rec.
+intros n H.
+induction n.
+ apply divex with 0.
+ left.
+ rewrite <- mult_n_O.
+ reflexivity.
+
+ induction n.
+  apply divex with 0.
+  right; rewrite <- plus_n_O; reflexivity.
+
+  elim H with n.
+   intros y Hor.
+   apply divex with (S y).
+   destruct Hor.
+    rewrite H0; simpl; auto.
+
+    rewrite H0; simpl; auto.
+
+   auto.
+
+eucl_div2 is defined
+```
+
+
+---
+
+
+```coq
+Coq < Extraction Inline gt_wf_rec lt_wf_rec induction_ltof2.
+
+Coq < Recursive Extraction eucl_div2.
+Warning: The extraction is currently set to bypass opacity,
+the following opaque constant bodies have been accessed :
+ eucl_div2.
+
+type nat =
+| O
+| S of nat
+
+type div2 =
+  nat
+  (* singleton inductive, whose constructor was divex *)
+
+(** val eucl_div2 : nat -> div2 **)
+
+let rec eucl_div2 = function
+| O -> O
+| S n ->
+  (match n with
+   | O -> O
+   | S n0 -> S (eucl_div2 n0))
+```
+
+
+
+
+
+
+
+    </textarea>
+    <script src="http://gnab.github.io/remark/downloads/remark-latest.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
+
