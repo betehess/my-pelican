@@ -27,3 +27,6 @@ push-www:
 
 push-feed:
 	rsync -avz -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --progress website/output/feed/ betehess@bertails.org:~/www/feed/
+
+push-static:
+	rsync -avz -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --progress website/my-theme/static/ betehess@bertails.org:~/www/
