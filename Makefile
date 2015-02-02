@@ -1,7 +1,5 @@
 docker-build:
 	docker build -t betehess/pelican .
-	mkdir website/content
-	mkdir website/output
 
 docker-kill:
 	docker stop pelican
