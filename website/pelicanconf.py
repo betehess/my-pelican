@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 AUTHOR = u'Alexandre Bertails'
-SITENAME = u"You have a link"
+SITENAME = u"bertails.org"
 SITEURL = u'http://bertails.org'
 #RELATIVE_URLS = True
 
